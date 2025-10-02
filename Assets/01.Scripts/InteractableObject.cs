@@ -61,7 +61,7 @@ public class InteractableObject : MonoBehaviour
 
     protected virtual void RemoveHighlight()
     {
-        if (objectRenderer != null && !isHighlighted)
+        if (objectRenderer != null && isHighlighted)
         {
             objectRenderer.material.color = originalColor;
             objectRenderer.material.SetFloat("_Emission", 0f);

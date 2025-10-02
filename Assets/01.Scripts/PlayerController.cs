@@ -34,6 +34,8 @@ public class PlayerController : MonoBehaviour
     private bool wasGrounded;
     private float attackTimer;
 
+    private bool isUIMode = false;
+
     private void Start()
     {
         controller = GetComponent<CharacterController>();
@@ -42,12 +44,20 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        CheckGrounded();
-        HandleLanding();
-        HandleMovement();
-        UpdateAinmator();
-        HandleAttack();
-        HandleJump();
+        if(Input.GetKeyDown(KeyCode.Tab))
+        {
+            ToggleCursorlock();
+        }
+
+        if(isUIMode)
+        {
+            CheckGrounded();
+            HandleLanding();
+            HandleMovement();
+            UpdateAinmator();
+            HandleAttack();
+            HandleJump();
+        }
     }
 
     void HandleMovement()
@@ -181,5 +191,32 @@ public class PlayerController : MonoBehaviour
                 animator.SetTrigger("attackTrigger");
             }
         }
+    }
+
+    public void SetCursorLock(bool lockCursor)
+    {
+        if(lockCursor)
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = true;
+            isUIMode = true;
+        }
+        else
+        {
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+            isUIMode = true;
+        }
+    }
+
+    public void ToggleCursorlock()
+    {
+        bool ShouldLock = Cursor.lockState != CursorLockMode.Locked;
+        SetCursorLock(ShouldLock);
+    }    
+
+    public void SetUIMode(bool uiMode)
+    {
+        SetCursorLock(!uiMode);
     }
 }
